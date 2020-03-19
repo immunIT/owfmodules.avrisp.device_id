@@ -1,4 +1,3 @@
-# owfmodules.skeleton
-Module base repository
+# owfmodules.avrisp.device_id
 
-Please read [CONTRIBUTING.md](https://bitbucket.org/octowire/octowire-framework/src/master/CONTRIBUTING.md) to follow the contribution process.
+Module getting the ID of an AVR device using the SPI interface along with a Reset line (GPIO)
