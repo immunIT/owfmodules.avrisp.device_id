@@ -116,7 +116,7 @@ class DeviceID(AModule):
         spi_interface.transmit(enable_mem_access_cmd)
 
         self.logger.handle("Read device ID...", self.logger.INFO)
-        return self.process(spi_interface)
+        return self.process(spi_interface, reset)
 
     def run(self, return_value=False):
         """
