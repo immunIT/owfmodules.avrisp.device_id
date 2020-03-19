@@ -69,17 +69,17 @@ class DeviceID(AModule):
         read_device_id_base_cmd = b'\x30\x00'
 
         # Asking vendor ID
-        spi_interface.transmit(read_device_id_base_cmd + b'\x00\x00')
+        spi_interface.transmit(read_device_id_base_cmd + b'\x00')
         vendor_id = spi_interface.receive(1)
         self.manage_resp(msg="Vendor ID", resp=vendor_id)
 
         # Asking Part Family and Flash size
-        spi_interface.transmit(read_device_id_base_cmd + b'\x01\x00')
+        spi_interface.transmit(read_device_id_base_cmd + b'\x01')
         part_family_and_size = spi_interface.receive(1)
         self.manage_resp(msg="Part Family and Flash Size", resp=part_family_and_size)
 
         # Asking Part Number
-        spi_interface.transmit(read_device_id_base_cmd + b'\x02\x00')
+        spi_interface.transmit(read_device_id_base_cmd + b'\x02')
         part_number = spi_interface.receive(1)
         self.manage_resp(msg="Part Family and Flash Size", resp=part_number)
 
