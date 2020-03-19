@@ -51,9 +51,9 @@ class DeviceID(AModule):
     def get_device_info(self, signature):
         for device_signature, device_info in avr_device.items():
             if device_signature == signature:
-                self.logger.handle("Device name: {}".format(device_info["name"]))
-                self.logger.handle("Device flash size: {}".format(device_info["flash_size"]))
-                self.logger.handle("Device eeprom size: {}".format(device_info["eeeprom_size"]))
+                self.logger.handle("Device name: {}".format(device_info["name"]), self.logger.RESULT)
+                self.logger.handle("Device flash size: {}".format(device_info["flash_size"]), self.logger.RESULT)
+                self.logger.handle("Device eeprom size: {}".format(device_info["eeeprom_size"]), self.logger.RESULT)
                 return device_info
         else:
             self.logger.handle("Device ID not found. Enable to identify the target device.")
@@ -61,7 +61,7 @@ class DeviceID(AModule):
 
     def manage_resp(self, msg, resp):
         if resp is not None:
-            self.logger.handle("{}: {}".format(msg, codecs.encode(resp, 'hex').decode().upper()), self.logger.RESULT)
+            self.logger.handle("{}: {}".format(msg, codecs.encode(resp, 'hex').decode().upper()), self.logger.SUCCESS)
         else:
             raise Exception("Unable to get a response while reading the device response")
 
