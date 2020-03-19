@@ -81,7 +81,7 @@ class DeviceID(AModule):
         # Asking Part Number
         spi_interface.transmit(read_device_id_base_cmd + b'\x02')
         part_number = spi_interface.receive(1)
-        self.manage_resp(msg="Part Family and Flash Size", resp=part_number)
+        self.manage_resp(msg="Part number", resp=part_number)
 
         # Drive reset high
         reset.status = 1
