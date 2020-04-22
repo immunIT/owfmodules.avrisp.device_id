@@ -25,14 +25,14 @@ class DeviceID(AModule):
                            '(GPIO).',
             'author': 'Jordan Ovrè <ghecko78@gmail.com> / Paul Duncan <eresse@dooba.io>'
         })
-        self.options = [
-            {"Name": "spi_bus", "Value": "", "Required": True, "Type": "int",
-             "Description": "The octowire SPI bus (0=SPI0 or 1=SPI1)", "Default": 0},
-            {"Name": "reset_line", "Value": "", "Required": True, "Type": "int",
-             "Description": "The octowire GPIO used as the Reset line", "Default": 0},
-            {"Name": "spi_baudrate", "Value": "", "Required": True, "Type": "int",
-             "Description": "set SPI baudrate (1000000 = 1MHz) maximum = 50MHz", "Default": 1000000},
-        ]
+        self.options = {
+            "spi_bus": {"Value": "", "Required": True, "Type": "int",
+                        "Description": "The octowire SPI bus (0=SPI0 or 1=SPI1)", "Default": 0},
+            "reset_line": {"Value": "", "Required": True, "Type": "int",
+                           "Description": "The octowire GPIO used as the Reset line", "Default": 0},
+            "spi_baudrate": {"Value": "", "Required": True, "Type": "int",
+                             "Description": "set SPI baudrate (1000000 = 1MHz) maximum = 50MHz", "Default": 1000000}
+        }
 
     def check_signature(self, vendor_id, part_family, part_number):
         if vendor_id == b"\x00" and part_family == b"\x01" and part_number == b"\x02":
