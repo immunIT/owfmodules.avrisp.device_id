@@ -94,9 +94,9 @@ class DeviceID(AModule):
             return None
 
     def device_id(self):
-        bus_id = self.get_option_value("spi_bus")
-        reset_line = self.get_option_value("reset_line")
-        spi_baudrate = self.get_option_value("spi_baudrate")
+        bus_id = self.options["spi_bus"]["Value"]
+        reset_line = self.options["reset_line"]["Value"]
+        spi_baudrate = self.options["spi_baudrate"]["Value"]
 
         enable_mem_access_cmd = b'\xac\x53\x00\x00'
 
