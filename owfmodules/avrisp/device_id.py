@@ -53,7 +53,11 @@ class DeviceID(AModule):
             if device_signature == signature:
                 self.logger.handle("Device name: {}".format(device_info["name"]), self.logger.RESULT)
                 self.logger.handle("Device flash size: {}".format(device_info["flash_size"]), self.logger.RESULT)
+                self.logger.handle("Device flash page size: {}".format(device_info["flash_pagesize"]),
+                                   self.logger.RESULT)
                 self.logger.handle("Device eeprom size: {}".format(device_info["eeeprom_size"]), self.logger.RESULT)
+                self.logger.handle("Device eeprom page size: {}".format(device_info["eeeprom_pagesize"]),
+                                   self.logger.RESULT)
                 return device_info
         else:
             self.logger.handle("Device ID not found. Enable to identify the target device.")
