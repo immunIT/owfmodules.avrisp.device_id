@@ -71,6 +71,13 @@ class DeviceID(AModule):
 
     def process(self, spi_interface, reset):
         read_device_id_base_cmd = b'\x30\x00'
+        enable_mem_access_cmd = b'\xac\x53\x00\x00'
+
+        self.logger.handle("Enable Memory Access...", self.logger.INFO)
+        # Drive reset low
+        reset.status = 0
+        # Enable Memory Access
+        spi_interface.transmit(enable_mem_access_cmd)
 
         # Asking vendor ID
         spi_interface.transmit(read_device_id_base_cmd + b'\x00')
@@ -102,7 +109,6 @@ class DeviceID(AModule):
         reset_line = self.options["reset_line"]["Value"]
         spi_baudrate = self.options["spi_baudrate"]["Value"]
 
-        enable_mem_access_cmd = b'\xac\x53\x00\x00'
 
         spi_interface = SPI(serial_instance=self.owf_serial, bus_id=bus_id)
         reset = GPIO(serial_instance=self.owf_serial, gpio_pin=reset_line)
@@ -112,12 +118,6 @@ class DeviceID(AModule):
         reset.status = 1
         # Configure SPI with default phase and polarity
         spi_interface.configure(baudrate=spi_baudrate)
-
-        self.logger.handle("Enable Memory Access...", self.logger.INFO)
-        # Drive reset low
-        reset.status = 0
-        # Enable Memory Access
-        spi_interface.transmit(enable_mem_access_cmd)
 
         self.logger.handle("Read device ID...", self.logger.INFO)
         return self.process(spi_interface, reset)
