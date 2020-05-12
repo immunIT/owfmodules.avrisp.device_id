@@ -55,7 +55,7 @@ class DeviceID(AModule):
                 self.logger.handle("Device flash size: {}".format(device_info["flash_size"]), self.logger.RESULT)
                 self.logger.handle("Device flash page size: {}".format(device_info["flash_pagesize"]),
                                    self.logger.RESULT)
-                self.logger.handle("Device eeprom size: {}".format(device_info["eeeprom_size"]), self.logger.RESULT)
+                self.logger.handle("Device eeprom size: {}".format(device_info["eeprom_size"]), self.logger.RESULT)
                 self.logger.handle("Device eeprom page size: {}".format(device_info["eeprom_pagesize"]),
                                    self.logger.RESULT)
                 return device_info
