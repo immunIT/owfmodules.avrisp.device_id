@@ -1,10 +1,10 @@
 # -*- coding:utf-8 -*-
 
-# Octowire SPI flash id module
-# Copyright (c) Jordan Ovrè / Paul Duncan
-# License: GPLv3
-# Paul Duncan / Eresse <eresse@dooba.io>
-# Jordan Ovrè / Ghecko <ghecko78@gmail.com
+# Octowire framework AVRISP device id module
+# Copyright (c) ImmunIT - Jordan Ovrè / Paul Duncan
+# License: Apache 2.0
+# Paul Duncan / Eresse <pduncan@immunit.ch>
+# Jordan Ovrè / Ghecko <jovre@immunit.ch>
 
 
 import codecs
