@@ -21,7 +21,7 @@ setup(
     description=description,
     author=__authors__,
     zip_safe=True,
-    url='https://bitbucket.org/octowire/' + name,
+    url='https://github.com/immunIT/' + name,
     classifiers=[
         'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python :: 3',
