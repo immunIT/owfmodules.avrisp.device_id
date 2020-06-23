@@ -23,7 +23,7 @@ class DeviceID(AModule):
             'version': '1.0.0',
             'description': 'Module getting the ID of an AVR device using the SPI interface along with a Reset line '
                            '(GPIO).',
-            'author': 'Jordan Ovrè <ghecko78@gmail.com> / Paul Duncan <eresse@dooba.io>'
+            'author': 'Jordan Ovrè <jovre@immunit.ch> / Paul Duncan <pduncan@immunit.ch>'
         })
         self.options = {
             "spi_bus": {"Value": "", "Required": True, "Type": "int",
