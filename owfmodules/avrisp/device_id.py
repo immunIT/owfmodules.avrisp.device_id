@@ -1,11 +1,10 @@
 # -*- coding:utf-8 -*-
 
-# Octowire framework AVRISP device id module
+# Octowire Framework
 # Copyright (c) ImmunIT - Jordan Ovrè / Paul Duncan
 # License: Apache 2.0
 # Paul Duncan / Eresse <pduncan@immunit.ch>
 # Jordan Ovrè / Ghecko <jovre@immunit.ch>
-
 
 import codecs
 
@@ -21,23 +20,22 @@ class DeviceID(AModule):
         self.meta.update({
             'name': 'AVR device ID',
             'version': '1.0.0',
-            'description': 'Module getting the ID of an AVR device using the SPI interface along with a Reset line '
-                           '(GPIO).',
+            'description': 'Identify AVR microcontrollers',
             'author': 'Jordan Ovrè <jovre@immunit.ch> / Paul Duncan <pduncan@immunit.ch>'
         })
         self.options = {
             "spi_bus": {"Value": "", "Required": True, "Type": "int",
-                        "Description": "The octowire SPI bus (0=SPI0 or 1=SPI1)", "Default": 0},
+                        "Description": "SPI bus (0=SPI0 or 1=SPI1)", "Default": 0},
             "reset_line": {"Value": "", "Required": True, "Type": "int",
-                           "Description": "The octowire GPIO used as the Reset line", "Default": 0},
+                           "Description": "GPIO used as the Reset line", "Default": 0},
             "spi_baudrate": {"Value": "", "Required": True, "Type": "int",
-                             "Description": "set SPI baudrate (1000000 = 1MHz) maximum = 50MHz", "Default": 1000000}
+                             "Description": "SPI frequency (1000000 = 1MHz) maximum = 50MHz", "Default": 1000000}
         }
 
     def check_signature(self, vendor_id, part_family, part_number):
         if vendor_id == b"\x00" and part_family == b"\x01" and part_number == b"\x02":
-            self.logger.handle("Device Locked. both Lock bits have been set. This prevents the memory blocks from "
-                               "responding. To erase the Lock bits, it is necessary to perform a valid 'Chip Erase'.",
+            self.logger.handle("Device Locked (Lock bits have been set). This prevents the memory from being read. "
+                               "To erase the Lock bits, it is necessary to perform a valid 'Chip Erase'.",
                                self.logger.ERROR)
             return False
         elif vendor_id in [b"\x00", b"\xFF"]:
@@ -55,23 +53,23 @@ class DeviceID(AModule):
                 self.logger.handle("Device flash size: {}".format(device_info["flash_size"]), self.logger.RESULT)
                 self.logger.handle("Device flash page size: {}".format(device_info["flash_pagesize"]),
                                    self.logger.RESULT)
-                self.logger.handle("Device eeprom size: {}".format(device_info["eeprom_size"]), self.logger.RESULT)
+                self.logger.handle("Device EEPROM size: {}".format(device_info["eeprom_size"]), self.logger.RESULT)
                 return device_info
         else:
-            self.logger.handle("Device ID not found. Enable to identify the target device.")
+            self.logger.handle("Device ID not found.")
             return None
 
     def manage_resp(self, msg, resp):
         if resp is not None:
             self.logger.handle("{}: {}".format(msg, codecs.encode(resp, 'hex').decode().upper()), self.logger.SUCCESS)
         else:
-            raise Exception("Unable to get a response while reading the device response")
+            raise Exception("Unable to get a response from the device")
 
     def process(self, spi_interface, reset):
         read_device_id_base_cmd = b'\x30\x00'
         enable_mem_access_cmd = b'\xac\x53\x00\x00'
 
-        self.logger.handle("Enable Memory Access...", self.logger.INFO)
+        self.logger.handle("Enabling Memory Access...", self.logger.INFO)
         # Drive reset low
         reset.status = 0
         # Enable Memory Access
@@ -110,14 +108,15 @@ class DeviceID(AModule):
 
         spi_interface = SPI(serial_instance=self.owf_serial, bus_id=bus_id)
         reset = GPIO(serial_instance=self.owf_serial, gpio_pin=reset_line)
-
         reset.direction = GPIO.OUTPUT
-        # Active Reset is low
+
+        # Reset is active-low
         reset.status = 1
+
         # Configure SPI with default phase and polarity
         spi_interface.configure(baudrate=spi_baudrate)
 
-        self.logger.handle("Read device ID...", self.logger.INFO)
+        self.logger.handle("Reading device ID...", self.logger.INFO)
         return self.process(spi_interface, reset)
 
     def run(self, return_value=False):
@@ -126,8 +125,8 @@ class DeviceID(AModule):
         Print/return the ID of an AVR device.
         :return: Nothing or bytes, depending of the 'return_value' parameter.
         """
-        # If detect_octowire is True then Detect and connect to the Octowire hardware. Else, connect to the Octowire
-        # using the parameters that were configured. It sets the self.owf_serial variable if the hardware is found.
+        # If detect_octowire is True then detect and connect to the Octowire hardware. Else, connect to the Octowire
+        # using the parameters that were configured. This sets the self.owf_serial variable if the hardware is found.
         self.connect()
         if not self.owf_serial:
             return None

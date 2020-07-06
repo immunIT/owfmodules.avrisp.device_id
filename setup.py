@@ -10,7 +10,7 @@ __license__ = "Apache 2.0"
 __version__ = "1.0.0"
 __contact__ = "Jordan Ovrè / Ghecko <jovre@immunit.ch>, Paul Duncan / Eresse <pduncan@immunit.ch>"
 
-description = 'Octowire Framework AVR device id module'
+description = 'Identify AVR microcontrollers'
 name = 'owfmodules.avrisp.device_id'
 
 setup(
