@@ -19,7 +19,7 @@ class DeviceID(AModule):
         super(DeviceID, self).__init__(owf_config)
         self.meta.update({
             'name': 'AVR device identification',
-            'version': '1.0.0',
+            'version': '1.0.1',
             'description': 'Identify AVR microcontrollers',
             'author': 'Jordan Ovrè <jovre@immunit.ch> / Paul Duncan <pduncan@immunit.ch>'
         })
