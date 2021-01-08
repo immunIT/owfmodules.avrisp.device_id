@@ -19,7 +19,7 @@ class DeviceID(AModule):
         super(DeviceID, self).__init__(owf_config)
         self.meta.update({
             'name': 'AVR device identification',
-            'version': '1.0.1',
+            'version': '1.0.2',
             'description': 'Identify AVR microcontrollers',
             'author': 'Jordan Ovrè <jovre@immunit.ch> / Paul Duncan <pduncan@immunit.ch>'
         })
@@ -29,7 +29,8 @@ class DeviceID(AModule):
             "reset_line": {"Value": "", "Required": True, "Type": "int",
                            "Description": "GPIO used as the Reset line", "Default": 0},
             "spi_baudrate": {"Value": "", "Required": True, "Type": "int",
-                             "Description": "SPI frequency (1000000 = 1MHz) maximum = 50MHz", "Default": 1000000}
+                             "Description": "SPI frequency (1000000 = 1MHz). Minimum:240kHz - Maximum: 60MHz",
+                             "Default": 1000000}
         }
 
     def check_signature(self, vendor_id, part_family, part_number):
